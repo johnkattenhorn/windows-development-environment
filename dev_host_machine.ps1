@@ -22,7 +22,7 @@ choco install -y Microsoft-Hyper-V-All -source windowsFeatures
 choco install -y Microsoft-Windows-Subsystem-Linux -source windowsfeatures
 
 #--- Ubuntu ---
-Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1804 -OutFile ~/Ubuntu.appx -UseBasicParsing
+Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu -OutFile ~/Ubuntu.appx -UseBasicParsing
 Add-AppxPackage -Path ~/Ubuntu.appx
 
 #--- Packages ---
