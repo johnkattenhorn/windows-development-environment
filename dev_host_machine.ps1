@@ -39,7 +39,7 @@ choco install -y hyper
 
 #--- Git ---
 choco install -y git -params '"/GitAndUnixToolsOnPath /WindowsTerminal"'
-choco install -y github
+choco install -y --ignorechecksum github
 choco install -y gitversion.portable
 
 #--- Node, npm
