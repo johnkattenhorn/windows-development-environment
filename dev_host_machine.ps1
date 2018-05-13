@@ -54,7 +54,7 @@ if (Test-PendingReboot) { Invoke-Reboot }
 choco install -y resharper-platform
 
 #--- SQL Server 2017 Express ---
-choco install -y sql-server-express 
+#choco install -y sql-server-express 
 
 #--- SQL Server 2017 Developer Edition ---
 choco install -y sql-server-2017
