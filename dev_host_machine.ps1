@@ -48,11 +48,11 @@ RefreshEnv.cmd
 npm install -g npm-windows-upgrade
 
 #-- Angular Development ---
-nvm install 9.5.0
-nvm use 9.5.0
-RefreshEnv.cmd
+#nvm install 9.5.0
+#nvm use 9.5.0
+#RefreshEnv.cmd
 # Install Angular CLI
-npm install -g @angular/cli
+#npm install -g @angular/cli
 
 #--- Visual Studio Code
 choco install -y visualstudiocode
