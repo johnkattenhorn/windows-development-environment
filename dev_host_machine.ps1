@@ -32,10 +32,11 @@ choco install -y hyper
 #--- Git ---
 choco install -y git -params '"/GitAndUnixToolsOnPath /WindowsTerminal"'
 choco install -y github
+choco install -y gitversion.portable
 
 #--- Node, npm
 choco install -y nodejs # Node.js Current, Latest features
-npm install -g npm-windows-upgrade
+#npm install -g npm-windows-upgrade
 
 #--- Visual Studio Code
 choco install -y visualstudiocode
