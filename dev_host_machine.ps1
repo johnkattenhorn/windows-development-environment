@@ -17,6 +17,14 @@ Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\
 
 Update-ExecutionPolicy Unrestricted
 
+#Install NuGet library and mark it as trusted
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
+
+#Install the Azure Resource Manager and SharePoint PNP Powershell modules
+Install-Module AzureRM -AllowClobber
+Install-Module SharePointPnPPowerShellOnline -AllowClobber
+
 #--- Windows Subsystems/Features ---
 choco install -y Microsoft-Hyper-V-All -source windowsFeatures
 choco install -y Microsoft-Windows-Subsystem-Linux -source windowsfeatures
@@ -36,7 +44,16 @@ choco install -y gitversion.portable
 
 #--- Node, npm
 choco install -y nodejs # Node.js Current, Latest features
-#npm install -g npm-windows-upgrade
+RefreshEnv.cmd
+npm install -g npm-windows-upgrade
+
+
+#-- Angular Development ---
+nvm install 9.5.0
+nvm use 9.5.0
+RefreshEnv.cmd
+# Install Angular CLI
+npm install -g @angular/cli
 
 #--- Visual Studio Code
 choco install -y visualstudiocode
@@ -47,8 +64,20 @@ choco install -y vscode-docker
 choco install -y office365business 
 
 #--- Visual Studio 2017 ---
-choco install -y visualstudio2017enterprise --package-parameters "--allWorkloads --includeRecommended --includeOptional --passive --locale en-US"
-if (Test-PendingReboot) { Invoke-Reboot }
+choco install -y --allow-empty-checksums visualstudio2017enterprise
+choco install -y --allow-empty-checksums visualstudio2017-workload-azure
+choco install -y --allow-empty-checksums visualstudio2017-workload-data
+choco install -y --allow-empty-checksums visualstudio2017-workload-manageddesktop
+choco install -y --allow-empty-checksums visualstudio2017-workload-netcoretools
+choco install -y --allow-empty-checksums visualstudio2017-workload-netweb
+choco install -y --allow-empty-checksums visualstudio2017-workload-office
+choco install -y --allow-empty-checksums visualstudio2017-workload-managedgame
+choco install -y --allow-empty-checksums visualstudio2017-workload-nativecrossplat
+choco install -y --allow-empty-checksums visualstudio2017-workload-nativedesktop
+choco install -y --allow-empty-checksums visualstudio2017-workload-netcrossplat
+choco install -y --allow-empty-checksums visualstudio2017-workload-node
+choco install -y --allow-empty-checksums visualstudio2017-workload-universal
+choco install -y --allow-empty-checksums visualstudio2017-workload-webcrossplat
 
 #--- JetBrains Resharper 2018.1 ---
 choco install -y resharper-platform
@@ -72,6 +101,7 @@ Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 
 #--- Azure ---
 choco install -y azure-cli
+choco install -y azurepowershell
 
 #--- Basics ---
 choco install -y GoogleChrome
