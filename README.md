@@ -3,8 +3,8 @@ To run a setup script, click a link in the table below from your target machine.
 
 |Click link to run  |Description  |
 |---------|---------|
-|<a href='http://boxstarter.org/package/nr/url?https://raw.githubusercontent.com/johnkattenhorn/windows-development-environment/master/dev_host_machine.ps1?token=AK0OHkKpCgt-8lIcqBiQ1amsoPRrsDB7ks5a-J-0wA%3D%3D'>Development Machine</a>     | Windows Desktop Development Environment |
-|     | More Coming Soon!        |
+|<a href='http://boxstarter.org/package/nr/url?https://raw.githubusercontent.com/johnkattenhorn/windows-development-environment/master/essentials.ps1?token=AK0OHkKpCgt-8lIcqBiQ1amsoPRrsDB7ks5a-J-0wA%3D%3D'>Essentials</a>     | Windows Essentials (VS Code, Office, Chrome, Firefox) |
+|<a href='http://boxstarter.org/package/nr/url?https://raw.githubusercontent.com/johnkattenhorn/windows-development-environment/master/development.ps1?token=AK0OHkKpCgt-8lIcqBiQ1amsoPRrsDB7ks5a-J-0wA%3D%3D'>Development</a>    | Development (Visual Studio, SQL Developer Edition, NodeJs, Angular) |
 
 ## Setting up a VM
 Windows 10 VM setup instructions

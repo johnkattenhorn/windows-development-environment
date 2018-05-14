@@ -40,19 +40,6 @@ choco install -y hyper
 #--- Git ---
 choco install -y git -params '"/GitAndUnixToolsOnPath /WindowsTerminal"'
 choco install -y --ignorechecksum github
-choco install -y gitversion.portable
-
-#--- Node, npm
-choco install -y nodejs # Node.js Current, Latest features
-RefreshEnv.cmd
-npm install -g npm-windows-upgrade
-
-#-- Angular Development ---
-#nvm install 9.5.0
-#nvm use 9.5.0
-#RefreshEnv.cmd
-# Install Angular CLI
-#npm install -g @angular/cli
 
 #--- Visual Studio Code
 choco install -y visualstudiocode
@@ -61,37 +48,6 @@ choco install -y vscode-docker
 
 #--- Office ---
 choco install -y office365business 
-
-#--- Visual Studio 2017 ---
-choco install -y --allow-empty-checksums visualstudio2017enterprise
-choco install -y --allow-empty-checksums visualstudio2017-workload-azure
-choco install -y --allow-empty-checksums visualstudio2017-workload-data
-choco install -y --allow-empty-checksums visualstudio2017-workload-manageddesktop
-choco install -y --allow-empty-checksums visualstudio2017-workload-netcoretools
-choco install -y --allow-empty-checksums visualstudio2017-workload-netweb
-choco install -y --allow-empty-checksums visualstudio2017-workload-office
-choco install -y --allow-empty-checksums visualstudio2017-workload-managedgame
-choco install -y --allow-empty-checksums visualstudio2017-workload-nativecrossplat
-choco install -y --allow-empty-checksums visualstudio2017-workload-nativedesktop
-choco install -y --allow-empty-checksums visualstudio2017-workload-netcrossplat
-choco install -y --allow-empty-checksums visualstudio2017-workload-node
-choco install -y --allow-empty-checksums visualstudio2017-workload-universal
-choco install -y --allow-empty-checksums visualstudio2017-workload-webcrossplat
-
-#--- JetBrains Resharper 2018.1 ---
-choco install -y resharper-platform
-
-#--- SQL Server 2017 Express ---
-#choco install -y sql-server-express 
-
-#--- SQL Server 2017 Developer Edition ---
-choco install -y sql-server-2017
-
-#--- SQL Server 2017 Management Studio ---
-choco install -y sql-server-management-studio
-
-#--- Microsoft SQL Server Data Tools ---
-choco install -y ssdt17
 
 # --- OpenSSH ---
 #Get-WindowsCapability -Online | ? Name -like 'OpenSSH*'
@@ -103,18 +59,20 @@ choco install -y azure-cli
 choco install -y azurepowershell
 
 #--- Basics ---
-choco install -y GoogleChrome
+choco install -y powershell
+choco install -y googleChrome
 choco install -y firefox
 choco install -y postman
 choco install -y 7zip.install
 choco install -y sysinternals
 #choco install -y DotNet3.5
 
-
 if (Test-PendingReboot) { Invoke-Reboot }
 
 #--- Pinning Things ---
 Install-ChocolateyPinnedTaskBarItem "$env:programfiles\Google\Chrome\Application\chrome.exe"
+Install-ChocolateyPinnedTaskBarItem "${env:ProgramFiles(x86)}\Mozilla Firefox\firefox.exe"
+Install-ChocolateyPinnedTaskBarItem "$env:windir\system32\WindowsPowerShell\v1.0\PowerShell.exe"
 
 #--- Update Windows ---
 Enable-UAC
