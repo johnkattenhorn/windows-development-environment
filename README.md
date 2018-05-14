@@ -22,6 +22,13 @@ Chocolatey is a powerful package manager for Windows, working sort of like apt-g
 
 Once done, you can install packages by running `cinst` (short for `choco install`). Most packages below will be installed with Chocolatey.
 
+#### Package Management: Upgrade All Packages
+To upgrade all chocolately packages installed to latest versions you can issue the following command in a PowerShell (Administrator) console:
+
+```powershell
+choco upgrade all
+```
+
 ###### Bonus: Use Windows 10 & OneGet
 Windows 10 comes with [OneGet](https://github.com/OneGet/oneget), a universal package manager that can use Chocolatey to find and install packages. To install, run:
 
