@@ -65,6 +65,7 @@ choco install -y firefox
 choco install -y postman
 choco install -y 7zip.install
 choco install -y sysinternals
+choco install -y toggl 
 #choco install -y DotNet3.5
 
 if (Test-PendingReboot) { Invoke-Reboot }
