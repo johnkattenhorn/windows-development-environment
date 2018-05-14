@@ -49,6 +49,9 @@ choco install -y sql-server-2017
 #--- SQL Server 2017 Management Studio ---
 choco install -y sql-server-management-studio
 
+#--- SQL Operations Studio ---
+choco install -y sql-operations-studio 
+
 #--- Microsoft SQL Server Data Tools ---
 choco install -y ssdt17
 
