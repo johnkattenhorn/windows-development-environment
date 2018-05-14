@@ -39,7 +39,7 @@ choco install -y hyper
 
 #--- Git ---
 choco install -y git -params '"/GitAndUnixToolsOnPath /WindowsTerminal"'
-choco install -y --ignorechecksum github
+choco install -y github-desktop
 
 #--- Visual Studio Code
 choco install -y visualstudiocode
@@ -65,7 +65,11 @@ choco install -y firefox
 choco install -y postman
 choco install -y 7zip.install
 choco install -y sysinternals
-choco install -y toggl 
+choco install -y toggl
+choco install -y filezilla
+choco install -y microsoft-teams
+choco install -y crystaldiskinfo
+choco install -y itunes
 #choco install -y DotNet3.5
 
 if (Test-PendingReboot) { Invoke-Reboot }
