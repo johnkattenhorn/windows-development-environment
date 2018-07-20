@@ -22,7 +22,7 @@ npm install -g npm-windows-upgrade
 #npm install -g @angular/cli
 
 #--- Visual Studio 2017 ---
-choco install -y visualstudio2017enterprise --package-parameters "--allWorkloads --includeRecommended --includeOptional --passive" --execution-timeout=36000
+choco install -y visualstudio2017enterprise --package-parameters '--allWorkloads --includeRecommended --includeOptional --passive' --execution-timeout=36000
 
 #--- Docker ---
 choco install -y docker --execution-timeout=36000
