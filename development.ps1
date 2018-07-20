@@ -11,7 +11,7 @@ choco install -y gitversion.portable
 
 #--- Node, npm
 choco install -y nodejs # Node.js Current, Latest features
-RefreshEnv.cmd
+refreshenv
 npm install -g npm-windows-upgrade
 
 #-- Angular Development ---
@@ -20,6 +20,9 @@ npm install -g npm-windows-upgrade
 #RefreshEnv.cmd
 # Install Angular CLI
 #npm install -g @angular/cli
+
+#-- Docker for Windows
+choco install -y docker-for-windows
 
 #--- Visual Studio 2017 ---
 choco install -y --allow-empty-checksums visualstudio2017enterprise
@@ -33,6 +36,7 @@ choco install -y --allow-empty-checksums visualstudio2017-workload-managedgame
 choco install -y --allow-empty-checksums visualstudio2017-workload-nativecrossplat
 choco install -y --allow-empty-checksums visualstudio2017-workload-nativedesktop
 choco install -y --allow-empty-checksums visualstudio2017-workload-netcrossplat
+
 choco install -y --allow-empty-checksums visualstudio2017-workload-node
 choco install -y --allow-empty-checksums visualstudio2017-workload-universal
 choco install -y --allow-empty-checksums visualstudio2017-workload-webcrossplat
@@ -54,6 +58,9 @@ choco install -y sql-operations-studio
 
 #--- Microsoft SQL Server Data Tools ---
 choco install -y ssdt17
+
+#--- Service Fabric Tools ---
+
 
 if (Test-PendingReboot) { Invoke-Reboot }
 
