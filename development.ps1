@@ -27,7 +27,9 @@ choco install -y visualstudio2017enterprise --package-parameters '--allWorkloads
 #--- Docker ---
 choco install -y docker --execution-timeout=36000
 choco install -y docker-for-windows --execution-timeout=36000
-choco install -y docker-toolbox --params '-ia /TASKS="desktopicon,modifypath,upgradevm"' --execution-timeout=36000
+
+# K8
+choco install -y minikube --execution-timeout=36000
 
 #--- JetBrains Resharper 2018.1 ---
 choco install -y resharper-platform
