@@ -21,6 +21,8 @@ Set-PackageSource -Name chocolatey -Trusted -Force
 #dism.exe /online /add-capability /capabilityname:Tools.DeveloperMode.Core~~~~0.0.1.0
 #choco install -y spotify
 #choco install -y itunes
+#choco install -y whatsapp
+
 
 #--- Gitversion ---
 choco install -y gitversion.portable
@@ -47,7 +49,6 @@ choco install -y github-desktop
 choco install -y adobereader
 choco install -y jre8
 
-choco install -y whatsapp
 
 #--- Azure and MSFT Development
 choco install -y powerbi
