@@ -51,7 +51,7 @@ choco install -y jre8
 
 
 #--- Azure and MSFT Development
-choco install -y powerbi
+choco install -y powerbi --ignore-checksums
 choco install -y microsoftazurestorageexplorer
 choco install -y wawsdeploy
 choco install -y microsoft-r-open
