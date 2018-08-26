@@ -77,7 +77,7 @@ choco install -y kubernetes-cli
 choco install -y minikube --execution-timeout=36000
 
 #--- JetBrains Resharper 2018.1 ---
-choco install -y resharper-platform
+choco install -y resharper-ultimate-all
 
 #--- SQL Server 2017 Express ---
 #choco install -y sql-server-express 
