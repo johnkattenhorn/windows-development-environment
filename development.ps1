@@ -47,11 +47,6 @@ choco install -y github-desktop
 choco install -y adobereader
 choco install -y jre8
 
-choco install -y vcredist2008 
-choco install -y vcredist2010 
-#choco install -y vcredist2012
-choco install -y vcredist2013 
-
 choco install -y whatsapp
 
 #--- Azure and MSFT Development
