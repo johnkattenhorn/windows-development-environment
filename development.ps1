@@ -37,7 +37,7 @@ choco install -y 7zip.install
 choco install -y sysinternals
 choco install -y visualstudiocode
 choco install -y filezilla
-choco install -y fiddler4
+choco install -y fiddler
 choco install -y putty.install
 choco install -y firefox
 choco install -y microsoft-teams
@@ -49,7 +49,7 @@ choco install -y jre8
 
 choco install -y vcredist2008 
 choco install -y vcredist2010 
-choco install -y vcredist2012
+#choco install -y vcredist2012
 choco install -y vcredist2013 
 
 choco install -y whatsapp
