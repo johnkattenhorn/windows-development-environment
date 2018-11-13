@@ -94,6 +94,7 @@ choco install -y armclient
 choco install -y azure-cli
 
 #--- Angular Development ---
+choco install -y nvm
 nvm install 10.13.0
 nvm use 10.13.0
 refreshenv
