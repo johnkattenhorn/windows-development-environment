@@ -16,7 +16,7 @@ Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\
 Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name LaunchTo -Value 1
 Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name MMTaskbarMode -Value 2
 
-Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+Update-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 
 #--- Install NuGet library and mark it as trusted ---
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
