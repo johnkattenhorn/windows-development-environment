@@ -7,31 +7,66 @@ $Boxstarter.AutoLogin=$true # Save my password securely and auto-login after a r
 Disable-UAC
 Set-ExplorerOptions -showFileExtensions
 
-#--- Set up choco as a packageprovider too ---
+#--- Windows Features ---
+Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions
 
+#--- File Explorer Settings ---
+Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name NavPaneExpandToCurrentFolder -Value 1
+Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name NavPaneShowAllFolders -Value 1
+Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name LaunchTo -Value 1
+Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name MMTaskbarMode -Value 2
+
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+
+#--- Install NuGet library and mark it as trusted ---
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
+
+#--- Install the Azure Resource Manager module ---
+Install-Module AzureRM -AllowClobber
+
+#--- Set up choco as a packageprovider too ---
 Write-Host "Bootstrapping Chocolatey provider" -ForegroundColor Yellow
 Get-PackageProvider -Name Chocolatey -ForceBootstrap | Out-Null
 Write-Host "Trusting Chocolatey provider" -ForegroundColor Yellow
 Set-PackageSource -Name chocolatey -Trusted -Force
 
 #--- Host Only Configuration ---
-#Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All -NoRestart
-#Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart
-#dism.exe /online /add-capability /capabilityname:Language.Basic~~~nl-NL~0.0.1.0
-#dism.exe /online /add-capability /capabilityname:Tools.DeveloperMode.Core~~~~0.0.1.0
-#choco install -y spotify
-#choco install -y itunes
-#choco install -y whatsapp
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All -NoRestart
+Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux -NoRestart
+dism.exe /online /add-capability /capabilityname:Language.Basic~~~nl-NL~0.0.1.0
+dism.exe /online /add-capability /capabilityname:Tools.DeveloperMode.Core~~~~0.0.1.0
 
+#--- Ubuntu ---
+Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu -OutFile ~/Ubuntu.appx -UseBasicParsing
+Add-AppxPackage -Path ~/Ubuntu.appx
+
+# Make `refreshenv` available right away, by defining the $env:ChocolateyInstall variable
+# and importing the Chocolatey profile module.
+$env:ChocolateyInstall = Convert-Path "$((Get-Command choco).path)\..\.."
+Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+
+# refreshenv is now an alias for Update-SessionEnvironment
+# (rather than invoking refreshenv.cmd, the *batch file* for use with cmd.exe)
+refreshenv
+
+# --- Host Only ---
+choco install -y spotify
+choco install -y itunes
+choco install -y whatsapp
 
 #--- Gitversion ---
 choco install -y gitversion.portable
 
-#--- Node, npm
+#--- Node ---
 choco install -y nodejs # Node.js Current, Latest features
 choco install -y nodejs.install # Node.js Current, Latest features
+
 refreshenv
+
+#--- NPM ---
 npm install -g npm-windows-upgrade
+npm-windows-upgrade --npm-version latest
 
 #--- Install Apps ---
 choco install -y googlechrome
@@ -58,12 +93,13 @@ choco install -y microsoft-r-open
 choco install -y armclient
 choco install -y azure-cli
 
-#-- Angular Development ---
-#nvm install 9.5.0
-#nvm use 9.5.0
-#refreshenv
-# Install Angular CLI
-#npm install -g @angular/cli
+#--- Angular Development ---
+nvm install 9.5.0
+nvm use 9.5.0
+refreshenv
+
+#--- Install Angular CLI ---
+npm install -g @angular/cli
 
 #--- Visual Studio 2017 ---
 choco install -y visualstudio2017enterprise --package-parameters '--allWorkloads --includeRecommended --includeOptional --passive --locale en-US' --execution-timeout=36000
@@ -182,13 +218,13 @@ $apps = @(
     #"Windows.ContactSupport"
 )
 
-foreach ($app in $apps) {
-    Write-Output "Trying to remove $app"
-    Get-AppxPackage -Name $app | Remove-AppxPackage
-    Get-AppXProvisionedPackage -Online |
-        Where-Object DisplayName -EQ $app |
-        Remove-AppxProvisionedPackage -Online
-}
+# foreach ($app in $apps) {
+#     Write-Output "Trying to remove $app"
+#     Get-AppxPackage -Name $app | Remove-AppxPackage
+#     Get-AppXProvisionedPackage -Online |
+#         Where-Object DisplayName -EQ $app |
+#         Remove-AppxProvisionedPackage -Online
+# }
 
 #--- Update Windows ---
 Enable-UAC
