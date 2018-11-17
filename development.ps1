@@ -61,7 +61,6 @@ choco install -y gitversion.portable
 #--- Node ---
 choco install -y nodejs # Node.js Current, Latest features
 choco install -y nodejs.install # Node.js Current, Latest features
-
 refreshenv
 
 #--- NPM ---
@@ -95,6 +94,8 @@ choco install -y azure-cli
 
 #--- Angular Development ---
 choco install -y nvm
+refreshenv
+
 nvm install 10.13.0
 nvm use 10.13.0
 refreshenv
