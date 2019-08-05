@@ -5,16 +5,16 @@ $Boxstarter.AutoLogin=$true # Save my password securely and auto-login after a r
 
 #--- Configure Windows ---
 Disable-UAC
-Set-ExplorerOptions -showFileExtensions
+#Set-ExplorerOptions -showFileExtensions
 
 #--- Windows Features ---
 Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions
 
 #--- File Explorer Settings ---
-Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name NavPaneExpandToCurrentFolder -Value 1
-Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name NavPaneShowAllFolders -Value 1
-Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name LaunchTo -Value 1
-Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name MMTaskbarMode -Value 2
+#Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name NavPaneExpandToCurrentFolder -Value 1
+#Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name NavPaneShowAllFolders -Value 1
+#Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name LaunchTo -Value 1
+#Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name MMTaskbarMode -Value 2
 
 Update-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 
@@ -104,7 +104,7 @@ refreshenv
 npm install -g @angular/cli
 
 #--- Visual Studio 2017 ---
-choco install -y visualstudio2017enterprise --package-parameters '--allWorkloads --includeRecommended --includeOptional --passive --locale en-US' --execution-timeout=36000
+choco install -y visualstudio2019enterprise --package-parameters '--allWorkloads --includeRecommended --includeOptional --passive --locale en-US' --execution-timeout=36000
 
 #--- Docker ---
 choco install -y docker --execution-timeout=36000
@@ -115,7 +115,7 @@ choco install -y kubernetes-cli
 choco install -y minikube --execution-timeout=36000
 
 #--- JetBrains Resharper 2018.1 ---
-choco install -y resharper-ultimate-all
+#choco install -y resharper-ultimate-all
 
 #--- SQL Server 2017 Express ---
 #choco install -y sql-server-express 
@@ -145,21 +145,21 @@ $apps = @(
     "Microsoft.BingWeather"
     "Microsoft.Getstarted"
     "Microsoft.MicrosoftOfficeHub"
-    "Microsoft.MicrosoftSolitaireCollection"
+    #"Microsoft.MicrosoftSolitaireCollection"
     #"Microsoft.MicrosoftStickyNotes"
     "Microsoft.Office.OneNote"
     "Microsoft.People"
     "Microsoft.SkypeApp"
     #"Microsoft.Windows.Photos"
-    "Microsoft.WindowsAlarms"
+    #"Microsoft.WindowsAlarms"
     #"Microsoft.WindowsCalculator"
     #"Microsoft.WindowsCamera"
     "Microsoft.WindowsMaps"
     "Microsoft.WindowsSoundRecorder"
     #"Microsoft.WindowsStore"
     "Microsoft.XboxApp"
-    "Microsoft.ZuneMusic"
-    "Microsoft.ZuneVideo"
+    #"Microsoft.ZuneMusic"
+    #"Microsoft.ZuneVideo"
     "microsoft.windowscommunicationsapps"
     "Microsoft.MinecraftUWP"
     #"Microsoft.NetworkSpeedTest"
