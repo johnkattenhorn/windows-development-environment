@@ -51,9 +51,8 @@ Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 refreshenv
 
 # --- Host Only ---
-choco install -y spotify
-choco install -y itunes
-choco install -y whatsapp
+#choco install -y itunes
+#choco install -y whatsapp
 
 #--- Gitversion ---
 choco install -y gitversion.portable
