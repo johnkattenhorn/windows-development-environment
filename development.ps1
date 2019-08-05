@@ -83,6 +83,7 @@ choco install -y github-desktop
 choco install -y adobereader
 choco install -y jre8
 choco install -y postman
+choco install microsoft-windows-terminal
 
 #--- Azure and MSFT Development
 choco install -y powerbi --ignore-checksums
