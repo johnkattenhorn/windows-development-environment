@@ -1,14 +1,14 @@
 #--- Boxstarter options ---
-$Boxstarter.RebootOk=$false # Allow reboots?
-$Boxstarter.NoPassword=$false # Is this a machine with no login password?
-$Boxstarter.AutoLogin=$true # Save my password securely and auto-login after a reboot
+#$Boxstarter.RebootOk=$false # Allow reboots?
+#$Boxstarter.NoPassword=$false # Is this a machine with no login password?
+#$Boxstarter.AutoLogin=$true # Save my password securely and auto-login after a reboot
 
 #--- Configure Windows ---
 Disable-UAC
 #Set-ExplorerOptions -showFileExtensions
 
 #--- Windows Features ---
-Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions
+#Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions
 
 #--- File Explorer Settings ---
 #Set-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name NavPaneExpandToCurrentFolder -Value 1
@@ -22,9 +22,6 @@ Update-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 Set-PSRepository -Name "PSGallery" -InstallationPolicy Trusted
 
-#--- Install the Azure Resource Manager module ---
-Install-Module AzureRM -AllowClobber
-
 #--- Set up choco as a packageprovider too ---
 Write-Host "Bootstrapping Chocolatey provider" -ForegroundColor Yellow
 Get-PackageProvider -Name Chocolatey -ForceBootstrap | Out-Null
@@ -37,9 +34,24 @@ Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-L
 dism.exe /online /add-capability /capabilityname:Language.Basic~~~nl-NL~0.0.1.0
 dism.exe /online /add-capability /capabilityname:Tools.DeveloperMode.Core~~~~0.0.1.0
 
+#--- Enable developer mode on the system ---
+Set-ItemProperty -Path HKLM:\Software\Microsoft\Windows\CurrentVersion\AppModelUnlock -Name AllowDevelopmentWithoutDevLicense -Value 1
+
 #--- Ubuntu ---
-Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu -OutFile ~/Ubuntu.appx -UseBasicParsing
+Invoke-WebRequest -Uri https://aka.ms/wsl-ubuntu-1804 -OutFile ~/Ubuntu.appx -UseBasicParsing
 Add-AppxPackage -Path ~/Ubuntu.appx
+
+RefreshEnv
+Ubuntu1804 install --root
+Ubuntu1804 run apt update
+Ubuntu1804 run apt upgrade -y
+
+write-host "Installing tools inside the WSL distro..."
+Ubuntu1804 run apt install python2.7 python-pip -y 
+Ubuntu1804 run apt install python-numpy python-scipy -y
+Ubuntu1804 run pip install pandas
+
+write-host "Finished installing tools inside the WSL distro"
 
 # Make `refreshenv` available right away, by defining the $env:ChocolateyInstall variable
 # and importing the Chocolatey profile module.
@@ -50,47 +62,54 @@ Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
 # (rather than invoking refreshenv.cmd, the *batch file* for use with cmd.exe)
 refreshenv
 
-# --- Host Only ---
-#choco install -y itunes
-#choco install -y whatsapp
-
-#--- Gitversion ---
-choco install -y gitversion.portable
-
 #--- Node ---
 choco install -y nodejs # Node.js Current, Latest features
-choco install -y nodejs.install # Node.js Current, Latest features
 refreshenv
 
 #--- NPM ---
 npm install -g npm-windows-upgrade
 npm-windows-upgrade --npm-version latest
 
-#--- Install Apps ---
+#--- Browsers ---
 choco install -y googlechrome
+choco install -y firefox
+
+#-- Common Dev Tools
+choco install -y vscode
+choco install -y git --package-parameters="'/GitAndUnixToolsOnPath /WindowsTerminal'"
+choco install -y python
 choco install -y 7zip.install
 choco install -y sysinternals
-choco install -y visualstudiocode
+choco install -y microsoft-windows-terminal
 choco install -y filezilla
 choco install -y fiddler
 choco install -y putty.install
-choco install -y firefox
-choco install -y microsoft-teams
-choco install -y git
-choco install -y git.install
 choco install -y github-desktop
-choco install -y adobereader
 choco install -y jre8
 choco install -y postman
-choco install microsoft-windows-terminal
+choco install -y gitversion.portable
+
+#--- Install Apps ---
+choco install -y microsoft-teams
+choco install -y powerbi --ignore-checksums
+choco install -y adobereader
 
 #--- Azure and MSFT Development
-choco install -y powerbi --ignore-checksums
-choco install -y microsoftazurestorageexplorer
+
 choco install -y wawsdeploy
 choco install -y microsoft-r-open
 choco install -y armclient
+choco install -y powershell-core
 choco install -y azure-cli
+Install-Module -Force Az
+Install-Module -Force AzureRM -AllowClobber
+choco install -y microsoftazurestorageexplorer
+choco install -y terraform
+
+# Install tools in WSL instance
+write-host "Installing tools inside the WSL distro..."
+Ubuntu1804 run apt install ansible -y
+write-host "Finished installing tools inside the WSL distro"
 
 #--- Angular Development ---
 choco install -y nvm
@@ -103,16 +122,28 @@ refreshenv
 #--- Install Angular CLI ---
 npm install -g @angular/cli
 
-#--- Visual Studio 2017 ---
-choco install -y visualstudio2019enterprise --package-parameters '--allWorkloads --includeRecommended --includeOptional --passive --locale en-US' --execution-timeout=36000
+#--- Visual Studio 2019 ---
+choco install -y visualstudio2019enterprise --package-parameters "--allWorkloads --includeRecommended --includeOptional --passive --locale en-US"
+
+refreshenv
+
+#--- Web Tools ---
+code --install-extension msjsdiag.debugger-for-chrome
+code --install-extension msjsdiag.debugger-for-edge
+choco install -y python
+
+#--- Microsoft WebDriver ---
+choco install -y microsoftwebdriver
 
 #--- Docker ---
-choco install -y docker --execution-timeout=36000
-choco install -y docker-for-windows --execution-timeout=36000
-choco install -y kubernetes-cli
+Enable-WindowsOptionalFeature -Online -FeatureName containers -All
+refreshenv
+choco install -y docker-for-windows
+choco install -y vscode-docker
 
 # K8
-choco install -y minikube --execution-timeout=36000
+choco install -y minikube
+choco install -y kubernetes-cli
 
 #--- JetBrains Resharper 2018.1 ---
 #choco install -y resharper-ultimate-all
@@ -134,99 +165,64 @@ choco install -y ssdt17
 
 #--- Pinning Things ---
 
-#--- Uninstall things ---
+#--- Uninstall unnecessary applications that come with Windows out of the box ---
+Write-Host "Uninstall some applications that come with Windows out of the box" -ForegroundColor "Yellow"
 
-$apps = @(
-    # default Windows 10 apps
-    "Microsoft.Appconnector"
-    "Microsoft.BingFinance"
-    "Microsoft.BingNews"
-    "Microsoft.BingSports"
-    "Microsoft.BingWeather"
-    "Microsoft.Getstarted"
-    "Microsoft.MicrosoftOfficeHub"
-    #"Microsoft.MicrosoftSolitaireCollection"
-    #"Microsoft.MicrosoftStickyNotes"
-    "Microsoft.Office.OneNote"
-    "Microsoft.People"
-    "Microsoft.SkypeApp"
-    #"Microsoft.Windows.Photos"
-    #"Microsoft.WindowsAlarms"
-    #"Microsoft.WindowsCalculator"
-    #"Microsoft.WindowsCamera"
-    "Microsoft.WindowsMaps"
-    "Microsoft.WindowsSoundRecorder"
-    #"Microsoft.WindowsStore"
-    "Microsoft.XboxApp"
-    #"Microsoft.ZuneMusic"
-    #"Microsoft.ZuneVideo"
-    "microsoft.windowscommunicationsapps"
-    "Microsoft.MinecraftUWP"
-    #"Microsoft.NetworkSpeedTest"
-  
+#Referenced to build script
+# https://docs.microsoft.com/en-us/windows/application-management/remove-provisioned-apps-during-update
+# https://github.com/jayharris/dotfiles-windows/blob/master/windows.ps1#L157
+# https://gist.github.com/jessfraz/7c319b046daa101a4aaef937a20ff41f
+# https://gist.github.com/alirobe/7f3b34ad89a159e6daa1
+# https://github.com/W4RH4WK/Debloat-Windows-10/blob/master/scripts/remove-default-apps.ps1
 
-    # Threshold 2 apps
+function removeApp {
+	Param ([string]$appName)
+	Write-Output "Trying to remove $appName"
+	Get-AppxPackage $appName -AllUsers | Remove-AppxPackage
+	Get-AppXProvisionedPackage -Online | Where DisplayName -like $appName | Remove-AppxProvisionedPackage -Online
+}
 
-    "Microsoft.Messaging"
-    #"Microsoft.WindowsFeedbackHub"
+$applicationList = @(
+	"Microsoft.BingFinance"
+	"Microsoft.3DBuilder"
+	"Microsoft.BingFinance"
+	"Microsoft.BingNews"
+	"Microsoft.BingSports"
+	"Microsoft.BingWeather"
+	"Microsoft.CommsPhone"
+	"Microsoft.Getstarted"
+	"Microsoft.WindowsMaps"
+	"*MarchofEmpires*"
+	"Microsoft.GetHelp"
+	"Microsoft.Messaging"
+	"*Minecraft*"
+	"Microsoft.MicrosoftOfficeHub"
+	"Microsoft.OneConnect"
+	"Microsoft.WindowsPhone"
+	"Microsoft.WindowsSoundRecorder"
+	"*Solitaire*"
+	"Microsoft.XboxApp"
+	"Microsoft.XboxIdentityProvider"
+	"Microsoft.ZuneMusic"
+	"Microsoft.ZuneVideo"
+	"Microsoft.NetworkSpeedTest"
+	"Microsoft.FreshPaint"
+	"Microsoft.Print3D"
+	"*Autodesk*"
+	"*BubbleWitch*"
+    "king.com*"
+    "G5*"
+	"*Keeper*"
+	"*Plex*"
+	"*.Duolingo-LearnLanguagesforFree"
+	"*.EclipseManager"
+	"ActiproSoftwareLLC.562882FEEB491" # Code Writer
+	"*.AdobePhotoshopExpress"
+);
 
-    #Redstone apps
-    "Microsoft.BingFoodAndDrink"
-    "Microsoft.BingTravel"
-    "Microsoft.BingHealthAndFitness"
-    "Microsoft.WindowsReadingList"
-
-    # non-Microsoft
-    "9E2F88E3.Twitter"
-    "PandoraMediaInc.29680B314EFC2"
-    "Flipboard.Flipboard"
-    "ShazamEntertainmentLtd.Shazam"
-    "king.com.CandyCrushSaga"
-    "king.com.CandyCrushSodaSaga"
-    "king.com.*"
-    "ClearChannelRadioDigital.iHeartRadio"
-    "4DF9E0F8.Netflix"
-    "6Wunderkinder.Wunderlist"
-    "Drawboard.DrawboardPDF"
-    "2FE3CB00.PicsArt-PhotoStudio"
-    "D52A8D61.FarmVille2CountryEscape"
-    "TuneIn.TuneInRadio"
-    "GAMELOFTSA.Asphalt8Airborne"
-    "TheNewYorkTimes.NYTCrossword"
-    "DB6EA5DB.CyberLinkMediaSuiteEssentials"
-    "Facebook.Facebook"
-    "flaregamesGmbH.RoyalRevolt2"
-    "Playtika.CaesarsSlotsFreeCasino"
-    "A278AB0D.MarchofEmpires"
-    "KeeperSecurityInc.Keeper"
-    "ThumbmunkeysLtd.PhototasticCollage"
-    "XINGAG.XING"
-    "89006A2E.AutodeskSketchBook"
-    "D5EA27B7.Duolingo-LearnLanguagesforFree"
-    "46928bounde.EclipseManager"
-    "ActiproSoftwareLLC.562882FEEB491" # next one is for the Code Writer from Actipro Software LLC
-    "DolbyLaboratories.DolbyAccess"
-    "SpotifyAB.SpotifyMusic"
-    "A278AB0D.DisneyMagicKingdoms"
-    "WinZipComputing.WinZipUniversal"
-    
-    # apps which cannot be removed using Remove-AppxPackage
-    #"Microsoft.BioEnrollment"
-    #"Microsoft.MicrosoftEdge"
-    #"Microsoft.Windows.Cortana"
-    #"Microsoft.WindowsFeedback"
-    #"Microsoft.XboxGameCallableUI"
-    #"Microsoft.XboxIdentityProvider"
-    #"Windows.ContactSupport"
-)
-
-# foreach ($app in $apps) {
-#     Write-Output "Trying to remove $app"
-#     Get-AppxPackage -Name $app | Remove-AppxPackage
-#     Get-AppXProvisionedPackage -Online |
-#         Where-Object DisplayName -EQ $app |
-#         Remove-AppxProvisionedPackage -Online
-# }
+foreach ($app in $applicationList) {
+    removeApp $app
+}
 
 #--- Update Windows ---
 Enable-UAC
