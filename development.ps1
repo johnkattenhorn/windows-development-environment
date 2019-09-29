@@ -123,7 +123,7 @@ refreshenv
 npm install -g @angular/cli
 
 #--- Visual Studio 2019 ---
-choco install -y visualstudio2019enterprise --package-parameters "--allWorkloads --includeRecommended --includeOptional --passive --locale en-US"
+choco install -y visualstudio2019enterprise --package-parameters "--allWorkloads --includeRecommended --includeOptional --passive --locale en-US" --execution-timeout 36500
 
 refreshenv
 
@@ -152,7 +152,7 @@ choco install -y kubernetes-cli
 #choco install -y sql-server-express 
 
 #--- SQL Server 2017 Developer Edition ---
-choco install -y sql-server-2017
+choco install -y sql-server-2017 --execution-timeout 36500
 
 #--- SQL Server 2017 Management Studio ---
 choco install -y sql-server-management-studio
