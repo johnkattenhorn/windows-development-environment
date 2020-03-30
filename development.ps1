@@ -71,8 +71,9 @@ npm install -g npm-windows-upgrade
 npm-windows-upgrade --npm-version latest
 
 #--- Browsers ---
-choco install -y googlechrome
+#choco install -y googlechrome
 choco install -y firefox
+choco install -y microsoft-edge
 
 #-- Common Dev Tools
 choco install -y vscode
@@ -90,9 +91,9 @@ choco install -y postman
 choco install -y gitversion.portable
 
 #--- Install Apps ---
-choco install -y microsoft-teams
+#choco install -y microsoft-teams
 choco install -y powerbi --ignore-checksums
-choco install -y adobereader
+#choco install -y adobereader
 
 #--- Azure and MSFT Development
 
@@ -220,9 +221,9 @@ $applicationList = @(
 	"*.AdobePhotoshopExpress"
 );
 
-foreach ($app in $applicationList) {
-    removeApp $app
-}
+#foreach ($app in $applicationList) {
+#    removeApp $app
+#}
 
 #--- Update Windows ---
 Enable-UAC
