@@ -71,7 +71,7 @@ npm install -g npm-windows-upgrade
 npm-windows-upgrade --npm-version latest
 
 #--- Browsers ---
-#choco install -y googlechrome
+choco install -y googlechrome
 choco install -y firefox
 choco install -y microsoft-edge
 
@@ -91,7 +91,7 @@ choco install -y postman
 choco install -y gitversion.portable
 
 #--- Install Apps ---
-#choco install -y microsoft-teams
+choco install -y microsoft-teams
 choco install -y powerbi --ignore-checksums
 #choco install -y adobereader
 
@@ -143,7 +143,7 @@ choco install -y docker-for-windows
 choco install -y vscode-docker
 
 # K8
-choco install -y minikube
+#choco install -y minikube
 choco install -y kubernetes-cli
 
 #--- JetBrains Resharper 2018.1 ---
